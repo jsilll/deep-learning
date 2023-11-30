@@ -9,6 +9,7 @@
 \usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{colortbl}
+\usepackage{hyperref}
 \usepackage{spreadtab}
 \usepackage{longtable}
 \usepackage{pdflscape}
@@ -44,8 +45,8 @@
     \item \textbf{1. b)} Analysing the plot with the learning rate of 0.01, we find that the weight update many times results in accuracy changes in the order of 5\%, in both directions. This suggests that the weight adjustments might be overshooting the optimal value. On the other hand, the learning rate of 0.001 results in a more stable learning process, with the accuracy changes being in the order of 1\% or less. Unlike the model trained with 0.01 learning rate, this one seems to be tending to grow over time. This suggests that the weight adjustments are closer to the optimal value. Although the accuracies don't look much different: 0.5784 for learning rate 0.01 and 0.5936 for learning rate 0.001; for the latter it shows a lot more stability in its accuracy across epochs.
     \begin{figure}[h]
         \centering
-        \includegraphics[width=0.45\textwidth]{../hw1-q1-1b.01.png}
-        \includegraphics[width=0.45\textwidth]{../hw1-q1-1b.001.png}
+        \includegraphics[width=0.45\textwidth]{../outputs/hw1-q1-1b.01.png}
+        \includegraphics[width=0.45\textwidth]{../outputs/hw1-q1-1b.001.png}
         \caption{Train and validation accuracies for learning rates of 0.01 and 0.001}
         \label{fig:1b}
     \end{figure}
