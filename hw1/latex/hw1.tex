@@ -63,7 +63,7 @@
         \label{tab:1b}
         \caption{Train and validation accuracies for learning rates of 0.01 and 0.001}
     \end{figure}
-    \item \textbf{2. a)} This statement is true. A logistic regression model is a linear model, which means that it can only learn linearly separable data. On the other hand, a multi-layer perceptron using relu activations can learn to separate non-linearly separable data because of the non-linearity introduced by the relu activation function in between layers. However, it can be shown, by computing the Hessian matrix of the loss function, that the loss function of a logistic regression model is always convex, while the loss function of a multi-layer perceptron, in general, is not. This means that the logistic regression model can be trained to a global optimum, while, with a multi-layer perceptron, we can never be sure that we have reached a global optimum.
+    \item \textbf{2. a)} This statement is true. A logistic regression model is a linear model, which means that it can only learn linearly separable data. On the other hand, a multi-layer perceptron using relu activations can learn to separate non-linearly separable data because of the non-linearity introduced by the relu activation function in between layers. However, it can be shown, by computing the Hessian matrix of the loss function, that the loss function of a logistic regression model using cross-entropy loss is always convex, while the loss function of a multi-layer perceptron, in general, is not. This means that the logistic regression model can be trained to a global optimum, while, with a multi-layer perceptron, we can never be sure that we have reached a global optimum.
 \end{itemize}
 
 \end{document}
