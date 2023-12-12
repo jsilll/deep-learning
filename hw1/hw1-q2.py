@@ -29,6 +29,7 @@ class LogisticRegression(nn.Module):
         super().__init__()
         # In a pytorch module, the declarations of layers needs to come after
         # the super __init__ line, otherwise the magic doesn't work.
+        self.linear = nn.Linear(n_features, n_classes)
 
     def forward(self, x, **kwargs):
         """
@@ -44,8 +45,7 @@ class LogisticRegression(nn.Module):
         forward pass -- this is enough for it to figure out how to do the
         backward pass.
         """
-        raise NotImplementedError
-
+        return self.linear(x)
 
 # Q2.2
 class FeedforwardNetwork(nn.Module):
@@ -64,9 +64,29 @@ class FeedforwardNetwork(nn.Module):
         attributes that each FeedforwardNetwork instance has. Note that nn
         includes modules for several activation functions and dropout as well.
         """
-        super().__init__()
-        # Implement me!
-        raise NotImplementedError
+        super(FeedforwardNetwork, self).__init__()
+
+        activations = {"tanh": nn.Tanh, "relu": nn.ReLU}
+        activation_function = activations[activation_type]
+
+        transforms = []
+        if layers == 1:
+            transforms.append(nn.Linear(n_features, n_classes))
+            transforms.append(activation_function())
+        else:
+            transforms.append(nn.Linear(n_features, hidden_size))
+            transforms.append(activation_function())
+            transforms.append(nn.Dropout(dropout))
+
+            for _ in range(layers - 2):
+                transforms.append(nn.Linear(hidden_size, hidden_size))
+                transforms.append(activation_function())
+                transforms.append(nn.Dropout(dropout))
+
+            transforms.append(nn.Linear(hidden_size, n_classes))
+            transforms.append(activation_function())
+
+        self.net = nn.Sequential(*transforms)
 
     def forward(self, x, **kwargs):
         """
@@ -76,8 +96,7 @@ class FeedforwardNetwork(nn.Module):
         the output logits from x. This will include using various hidden
         layers, pointwise nonlinear functions, and dropout.
         """
-        raise NotImplementedError
-
+        return self.net.forward(x)
 
 def train_batch(X, y, model, optimizer, criterion, **kwargs):
     """
@@ -97,7 +116,13 @@ def train_batch(X, y, model, optimizer, criterion, **kwargs):
     This function should return the loss (tip: call loss.item()) to get the
     loss as a numerical value that is not part of the computation graph.
     """
-    raise NotImplementedError
+    # print type of X
+    optimizer.zero_grad()
+    outputs = model(X)
+    loss = criterion(outputs, y)
+    loss.backward()
+    optimizer.step()
+    return loss.item()
 
 
 def predict(model, X):
@@ -136,8 +161,7 @@ def plot(epochs, plottables, name='', ylim=None):
     plt.legend()
     if ylim:
         plt.ylim(ylim)
-    plt.savefig('%s.pdf' % (name), bbox_inches='tight')
-
+    plt.savefig('%s.png' % (name), bbox_inches='tight')
 
 def main():
     parser = argparse.ArgumentParser()
