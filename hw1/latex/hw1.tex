@@ -74,9 +74,22 @@
     \end{figure}
     \item \textbf{2. a)} This statement is true. A logistic regression model is a linear model, which means that it can only learn linearly separable data. On the other hand, a multi-layer perceptron using relu activations can learn to separate non-linearly separable data because of the non-linearity introduced by the relu activation function in between layers. However, it can be shown, by computing the Hessian matrix of the loss function, that the loss function of a logistic regression model using cross-entropy loss is always convex, while the loss function of a multi-layer perceptron, in general, is not. This means that the logistic regression model can be trained to a global optimum, while, with a multi-layer perceptron, we can never be sure that we have reached a global optimum.
 
-    \item \textbf{2. b)} 
+    \item \textbf{2. b)} Final test accuracy: 0.7580
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=1\linewidth]{../outputs/hw1-q1-2b.001-acc.png}
+        \caption{Train and validation accuracies for the no-toolkit MLP}
+        \label{fig:2b:acc}
+    \end{figure}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=1\linewidth]{../outputs/hw1-q1-2b.001-loss.png}
+        \caption{Train loss for the no-toolkit MLP}
+        \label{fig:2b:loss}
+    \end{figure}
 \end{itemize}
 
 \section*{Question 2}
+
 
 \end{document}
