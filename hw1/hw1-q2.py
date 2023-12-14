@@ -64,27 +64,30 @@ class FeedforwardNetwork(nn.Module):
         attributes that each FeedforwardNetwork instance has. Note that nn
         includes modules for several activation functions and dropout as well.
         """
+        if layers < 1:
+            raise ValueError("layers must be at least 1")
+        elif dropout < 0 or dropout > 1:
+            raise ValueError("dropout must be between 0 and 1")
+
         super(FeedforwardNetwork, self).__init__()
 
+        transforms = []
         activations = {"tanh": nn.Tanh, "relu": nn.ReLU}
         activation_function = activations[activation_type]
-
-        transforms = []
+        
         if layers == 1:
             transforms.append(nn.Linear(n_features, n_classes))
-            transforms.append(activation_function())
         else:
             transforms.append(nn.Linear(n_features, hidden_size))
             transforms.append(activation_function())
-            transforms.append(nn.Dropout(dropout))
-
+            if dropout != 0:
+                transforms.append(nn.Dropout(dropout))
             for _ in range(layers - 2):
                 transforms.append(nn.Linear(hidden_size, hidden_size))
                 transforms.append(activation_function())
-                transforms.append(nn.Dropout(dropout))
-
+                if dropout != 0:
+                    transforms.append(nn.Dropout(dropout))
             transforms.append(nn.Linear(hidden_size, n_classes))
-            transforms.append(activation_function())
 
         self.net = nn.Sequential(*transforms)
 
