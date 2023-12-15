@@ -22,44 +22,55 @@
 
 \begin{document}
 
-\title{Homework 1: Deep Learning}
+\title{Deep Learning: Homework 1}
 \author{Hugo Mantinhas 95592, João Silveira 95597}
 
 \maketitle
 
 \section*{Work Division}
 
+Each member of the group worked together on all the questions in this assignment. For this reason, the workload was divided equally between the two members of the group.
+
 \section*{Question 1}
 \begin{itemize}
     \item \textbf{1. a)}
-          \begin{figure}[H]
+          \begin{table}[H]
               \centering
               \begin{tabular}{|c|c|c|c|}
                   \toprule
-                                      & \textbf{Train} & \textbf{Validation} & \textbf{Test} \\
+                                    & \textbf{Train} & \textbf{Validation} & \textbf{Test} \\
                   \midrule
-                  \textbf{Perceptron} & 0.4654         & 0.4610              & 0.3422        \\
+                  \textbf{Accuracy} & 0.4654         & 0.4610              & 0.3422        \\
                   \bottomrule
               \end{tabular}
               \label{tab:1.1a}
-              \caption{Train and validation accuracies for the perceptron model}
-          \end{figure}
+              \caption{Train, validation and test accuracies for the perceptron model}
+          \end{table}
+
           \begin{figure}[H]
               \centering
-              \includegraphics[width=\linewidth]{../outputs/hw1-q1-1a.png}
-              \caption{Train and validation accuracies for the perceptron model}
+              \includegraphics[width=1\linewidth]{../outputs/hw1-q1-1a.png}
+              \caption{Train and validation accuracies as a function of the number of epochs for the perceptron model}
               \label{fig:1.1a}
           \end{figure}
+          \clearpage
 
-    \item \textbf{1. b)} Analysing the plot with the learning rate of 0.01, we find that the weight update many times results in accuracy changes in the order of 5\%, in both directions. This suggests that the weight adjustments might be overshooting the optimal value. On the other hand, the learning rate of 0.001 results in a more stable learning process, with the accuracy changes being in the order of 1\% or less. Unlike the model trained with 0.01 learning rate, this one seems to be tending to grow over time. This suggests that the weight adjustments are closer to the optimal value. Although the accuracies don't look much different: 0.5784 for learning rate 0.01 and 0.5936 for learning rate 0.001; for the latter it shows a lot more stability in its accuracy across epochs.
+    \item \textbf{1. b)} Analyzing the plot for the learning rate of 0.01, we find that the weight update many times results in accuracy changes in the order of 5\%, in both directions. This suggests that the weight adjustments might be overshooting the optimal value. On the other hand, the learning rate of 0.001 results in a more stable learning process, with the accuracy changes being in the order of 1\% or less. Unlike the model trained with 0.01 learning rate, this one seems to be tending to grow over time which suggests that the weight adjustments are closer to the optimal value. Although the final test accuracies for both models don't look much different: 0.5784 for learning rate 0.01 and 0.5936 for learning rate 0.001; for the latter the model shows a lot more stability in its accuracy across epochs.
           \begin{figure}[H]
               \centering
               \includegraphics[width=1\linewidth]{../outputs/hw1-q1-1b.01.png}
-              \includegraphics[width=1\linewidth]{../outputs/hw1-q1-1b.001.png}
-              \caption{Train and validation accuracies for learning rates of 0.01 and 0.001}
-              \label{fig:1.1b}
+              \caption{Train and validation accuracies as a function of the number of epochs for learning rate of 0.01}
+              \label{fig:1.1b:0.01}
           \end{figure}
+
           \begin{figure}[H]
+              \centering
+              \includegraphics[width=1\linewidth]{../outputs/hw1-q1-1b.001.png}
+              \caption{Train and validation accuracies as a function of the number of epochs for learning rate of 0.001}
+              \label{fig:1.1b:0.001}
+          \end{figure}
+
+          \begin{table}[H]
               \centering
               \begin{tabular}{|c|c|c|c|}
                   \toprule
@@ -70,92 +81,90 @@
                   \bottomrule
               \end{tabular}
               \label{tab:1.1b}
-              \caption{Train and validation accuracies for learning rates of 0.01 and 0.001}
-          \end{figure}
-    \item \textbf{2. a)} This statement is true. A logistic regression model is a linear model, which means that it can only learn linearly separable data. On the other hand, a multi-layer perceptron using relu activations can learn to separate non-linearly separable data because of the non-linearity introduced by the relu activation function in between layers. However, it can be shown, by computing the Hessian matrix of the loss function, that the loss function of a logistic regression model using cross-entropy loss is always convex, while the loss function of a multi-layer perceptron, in general, is not. This means that the logistic regression model can be trained to a global optimum, while, with a multi-layer perceptron, we can never be sure that we have reached a global optimum.
+              \caption{Train, validation and test accuracies for learning rates of 0.01 and 0.001}
+          \end{table}
 
-    \item \textbf{2. b)} Final test accuracy: 0.7580
+    \item \textbf{2. a)} This statement is true. A logistic regression model is a linear model, which means that it can only learn linearly separable data, i.e., a dataset whose classes can be separated by a hyperplane. On the other hand, a multi-layer perceptron using \texttt{relu} activations can learn to separate non-linearly separable data because of the non-linearity introduced by the \texttt{relu} activation function in between layers. However, it can be shown, by computing the Hessian matrix of the loss function, that the loss function of a logistic regression model using cross-entropy loss is always convex. However, the same cannot be done for the loss function of a multi-layer perceptron, in general. This means that the logistic regression model can be trained to a global optimum, while, when using a multi-layer perceptron, we can never be sure that we have reached a global optimum.
+
+    \item \textbf{2. b)} The final test accuracy is 0.7580.
           \begin{figure}[H]
               \centering
               \includegraphics[width=1\linewidth]{../outputs/hw1-q1-2b.001-acc.png}
-              \caption{Train and validation accuracies for the no-toolkit MLP}
+              \caption{Train and validation accuracies as a function of the number of epochs for the no-toolkit MLP}
               \label{fig:1.2b:acc}
           \end{figure}
+
           \begin{figure}[H]
               \centering
               \includegraphics[width=1\linewidth]{../outputs/hw1-q1-2b.001-loss.png}
-              \caption{Train loss for the no-toolkit MLP}
+              \caption{Train loss as a function of the number of epochs for the no-toolkit MLP}
               \label{fig:1.2b:loss}
           \end{figure}
 \end{itemize}
 
 \section*{Question 2}
 \begin{itemize}
-    \item \textbf{1. )} The best configuration in terms of validation accuracy was the one with learning rate 0.01 with a final test accuracy of 0.6200.
+    \item \textbf{1. )} The best configuration in terms of validation accuracy was the one with learning rate 0.01, with a validation accuracy of 0.6535. Its final test accuracy is 0.6200.
           \begin{figure}[H]
               \centering
               \includegraphics[width=0.5\linewidth]{../outputs/hw1-q2-1-acc.01.png}
-              \caption{Train and validation accuracies for the logistic regression model with learning rate 0.01}
+              \caption{Validation accuracy as a function of the number of epochs for the logistic regression model with learning rate 0.01}
               \label{fig:2.1:acc}
           \end{figure}
+
           \begin{figure}[H]
               \centering
               \includegraphics[width=0.5\linewidth]{../outputs/hw1-q2-1-loss.01.png}
-              \caption{Train loss for the logistic regression model with learning rate 0.01}
+              \caption{Train and validation loss as function of the number of epochs for the logistic regression model with learning rate 0.01}
               \label{fig:2.1:loss}
           \end{figure}
 
     \item \textbf{2. a)}
-          Choosing the right batch size implies dealing with a trade-off between speed of training, and accuracy of results. The larger the batch size, less frequently does the network update its own weights, meaning that it must do less non parallelizable computations, resulting in lower training times. However, updating the network weights less frequently 
-          
-This is how I understand it.
+          % Compare the performance of your model with batch sizes 16 and 1024 with the remaining hyperparameters at their default value.
 
-    When the batch size is small , the gradients are generally bigger and chaotic. This is because a incorrect value in one of the data point prediction could lead a larger loss when batch size is 2 as compared to 4 (or 16 as compared to 32). This makes the model move closer towards the local optima of that one particular batch at a time.
+          The choice of the batch size hyperparameter imposes dealing with a trade-off between accuracy and training time. Smaller batches produce more frequent gradient updates, but this comes at the cost of making more non-parallelizable computations. Moreover, as we decrease the batch size, the more noisy the gradient signal becomes, which, in the extreme case, can cause unstable training. However, when chosen properly, having a smaller batch size can also offer a regularizing effect, since it introduces noise in the gradient signal, which can help the model generalize better. Larger batch sizes, on the other hand, produce less frequent gradient updates, meaning that, in each epoch, we need to do less non-parallelizable computations and, therefore, each epoch takes less time to complete. However, in the extreme case, large batch sizes can lead to overfitting, since the gradient signal is less noisy. 
 
-    As you train your model, you will realize that the accuracy really doesn't get any better after lesser number of epoch , that is becuase , after sometime these sporadic changes in the value of gradients doesn't work. we need a bigger batch for our model to generalize well quickly.
+          In this case,
 
-So, small batches will give fast gradient updates, but the accuracy will stagnate quickly. Larger batches will increase the accuracy very slowly , but will keep doing it for longer number of epochs and will lead to better overall accuracy in longer term.
-
-This is why batch_size is also a hyperparameter and needs to be tuned.
-
-In practice, I have changed the batch_size mid training to gain these benefits but frankly it is almost never worth it. Just run your epoch on somewhat optimal batch_size.
-
-          The batch size can be understood as a trade-off between accuracy and speed. Large batch sizes can lead to faster training times but may result in lower accuracy and overfitting, while smaller batch sizes can provide better accuracy, but can be computationally expensive and time-consuming.
-          \begin{figure}[H]
+          \begin{table}[H]
               \centering
               \begin{tabular}{|c|cc|}
                   \toprule
                   \textbf{Batch Size} & \textbf{Test Accuracy} & \textbf{Execution time} \\
                   \midrule
-                  \textbf{16}         & \underline{0.7788}                 & 1min17.420sec        \\
-                  \textbf{1024}       & 0.7208                 & 0min22.466sec        \\
+                  \textbf{16}         & \underline{0.7788}     & 1min17.420sec           \\
+                  \textbf{1024}       & 0.7208                 & 0min22.466sec           \\
                   \bottomrule
               \end{tabular}
-              \caption{Comparison of 16 and 1024 batch sizes for the logistic regression}
+              \caption{Test accuracy and execution time for the feed-forward network with batch sizes 16 and 1024}
               \label{tab:2.2a}
-          \end{figure}
+          \end{table}
+
           \begin{figure}[H]
               \centering
               \includegraphics[width=0.5\linewidth]{../outputs/hw1-q2-2a-acc-16.png}
-              \caption{Train and validation accuracies for the feed-forward using a batch size of 16}
+              \caption{Train and validation accuracies as a function of the number of epochs for the feed-forward network using a batch size of 16}
               \label{fig:2.2a:acc:16}
           \end{figure}
+
           \begin{figure}[H]
               \centering
               \includegraphics[width=0.5\linewidth]{../outputs/hw1-q2-2a-loss-16.png}
-              \caption{Train loss for the feed-forward using a batch size of 16}
+              \caption{Train and validation loss as a function of the number of epochs for the feed-forward network using a batch size of 16}
               \label{fig:2.2a:loss:16}
           \end{figure}
+
           \begin{figure}[H]
               \centering
               \includegraphics[width=0.5\linewidth]{../outputs/hw1-q2-2a-acc-1024.png}
-              \caption{Train and validation accuracies for the feed-forward using a batch size of 1024}
+              \caption{Validation accuracy as a function of the number of epochs for the feed-forward using a batch size of 1024}
               \label{fig:2.2a:acc:1024}
           \end{figure}
+
           \begin{figure}[H]
               \centering
               \includegraphics[width=0.5\linewidth]{../outputs/hw1-q2-2a-loss-1024.png}
-              \caption{Train loss for the feed-forward using a batch size of 1024}
+              \caption{Train and validation loss as a function of the number of epochs for the feed-forward using a batch size of 1024}
               \label{fig:2.2a:loss:1024}
           \end{figure}
 \end{itemize}
