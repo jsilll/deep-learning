@@ -104,7 +104,7 @@ Each member of the group worked together on all the questions in this assignment
 
 \section*{Question 2}
 \begin{itemize}
-    \item \textbf{1. )} The best configuration in terms of validation accuracy was the one with learning rate 0.01, with a validation accuracy of 0.6535. Its final test accuracy is 0.6200.
+    \item \textbf{1.} The best configuration in terms of validation accuracy was the one with learning rate 0.01, with a validation accuracy of 0.6535. Its final test accuracy is 0.6200.
           \begin{figure}[H]
               \centering
               \includegraphics[width=0.5\linewidth]{../outputs/hw1-q2-1-acc.01.png}
@@ -435,8 +435,22 @@ Each member of the group worked together on all the questions in this assignment
 
         Given the codomain of $\{-1,1\}$, the final activation function, which is $sign(z)$, will not change the result, and will output directly the correct class.
 
-        TODO THE LIMITSS!!!
-        %TODO Limitss!!!!
+        The limits can be demonstrably proven to be robust. For this problem, adding an infinitesimal vector to the input vector, will only effect the $\sum_{i=1}^{D} x_i$. These infinitesimal vectors will result in a $S^{'}$, which is either infinitesimally bigger or smaller or equal than $S$, which are $S^{+}$, $S^{-}$, respectively. Let $S-A$ and $-S+B$ be $T$ and $U$, respectively, which as a subtraction between integers, are also integers.
+
+        \[
+            \lim_{S^{'}\to S}  h_0(z_0) = 
+            \begin{bmatrix}
+                S^{'} - A + 0.5 \geq 0  \\
+            -S^{'} + B + 0.5 \geq 0
+            \end{bmatrix}
+            = \lim_{T^{'}\to T \text{ and } U^{'}\to U}  h_0(z_0)
+            \begin{bmatrix}
+                T^{'} \geq - 0.5 \\
+                U^{'} \geq - 0.5
+            \end{bmatrix}
+        \]
+
+        Since $T,U$ are both integers, this inequality cannot flip with infinitesimal changes. As such, infinitesimal changes to S, in both directions, are equivalent to S.
 
     \item \textbf{1. c)} For ReLU, it is similar, and we can share work up from the equation \ref{directly-derived-smallerthans}:
         \[
@@ -601,6 +615,27 @@ Each member of the group worked together on all the questions in this assignment
         \]
 
         Which are the correct results for the three possible scenarios.
+
+        Like above, the limits can be demonstrably proven to be robust. For this problem, adding an infinitesimal vector to the input vector, will only effect the $\sum_{i=1}^{D} x_i$. These infinitesimal vectors will result in a $S^{'}$, which is either infinitesimally bigger or smaller or equal than $S$, which are $S^{+}$, $S^{-}$, respectively. Let $-S+A$ and $S-B$ be $T$ and $U$, respectively, which as a subtraction between integers, are also integers.
+
+        \[
+            \lim_{S^{'}\to S}  h_0(z_0) = 
+            ReLU(
+            \begin{bmatrix}
+                - (S^{'} - A + 0.5) \\
+                -(-S^{'} + B + 0.5) 
+            \end{bmatrix}
+            )
+            = \lim_{T^{'}\to T \text{ and } U^{'}\to U}  h_0(z_0) =
+            ReLU(
+            \begin{bmatrix}
+                T^{'} - 0.5 \\
+                U^{'} - 0.5
+            \end{bmatrix}
+            )
+        \]
+
+        Since $T,U$ are both integers, infinitesimal changes will not change the behaviour of the ReLU, which is converting negative values to 0, and keeping positive values unchanged. Infinitesimal changes will have no effect in changing the activation of the ReLU expression as a whole, since its decimal part is .5 . As such, the operation does not change meaning when approaching from different directions of $S$, and we can conclude that infinitesimal changes to $S$ are equivalent to $S$.
 
     \end{itemize}
 
