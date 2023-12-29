@@ -121,7 +121,6 @@ class CNN(nn.Module):
             # An affine transformation with:
             # - #Classes output features
             self.fc3 = nn.Linear(120, 10)
-
             # LogSoftmax layer
             self.logsoftmax = nn.LogSoftmax(dim=1)
         
@@ -193,9 +192,7 @@ def plot(epochs, plottable, ylabel='', name=''):
 
 
 def get_number_trainable_params(model):
-    ## TO IMPLEMENT - REPLACE return 0
-    return 0
-
+    return sum(p.numel() for p in model.parameters() if p.requires_grad)
 
 def main():
     parser = argparse.ArgumentParser()

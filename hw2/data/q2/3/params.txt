@@ -1,0 +1,2 @@
+Number of trainable parameters w/ maxpool:  225618
+Number of trainable parameters w/out maxpool:  225618
