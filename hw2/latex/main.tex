@@ -1,0 +1,126 @@
+\documentclass[11pt]{article}
+
+\usepackage{url}
+\usepackage{color}
+\usepackage{float}
+\usepackage{array}
+\usepackage{xcolor}
+\usepackage{multirow}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{colortbl}
+\usepackage{hyperref}
+\usepackage{spreadtab}
+\usepackage{longtable}
+\usepackage{pdflscape}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath, amsthm, amssymb, amsfonts}
+\usepackage[format=hang,labelfont=bf,font=small]{caption}
+
+\begin{document}
+
+\title{Deep Learning: Homework 2}
+\author{Hugo Mantinhas 95592, João Silveira 95597}
+
+\maketitle
+
+\section*{Work Division}
+
+Each member of the group worked together on all the questions in this assignment. For this reason, the workload was divided equally between the two members of the group.
+
+\section*{Question 1}
+
+\subsection*{1}
+
+The computational complexity of the self-attention layer in a transformer with a single attention head is \(O(L^2D)\), where \(L\) is the sequence length and \(D\) is the hidden size. In order to break down the complexity of this layer, it is important to note that the complexity of matrix multiplication of two matrices of dimensions \(n \times m\) and \(m \times p\) is \(O(nmp)\).
+
+\begin{itemize}
+    \item \textbf{Matrix multiplication between \(Q\) and \(K^T\):} This operation has complexity \(O(L^2D)\), since \(Q\) is of size \(L \times D\) and \(K^T\) is of size \(D \times L\).
+    \item \textbf{Softmax:} This operation has complexity \(O(L^2)\), since it is applied to a matrix of size \(L \times L\).
+    \item \textbf{Matrix multiplication between \(Softmax(QK^T)\) and \(V\):} This operation has complexity \(O(L^2D)\), since the result of the previous operation is of size \(L \times L\) and \(V\) is of size \(L \times D\).
+\end{itemize}
+
+Therefore, the overall complexity of the self-attention layer is given by: 
+
+\[
+O(L^2D) + O(L^2) + O(L^2D) = O(L^2D)
+\]
+
+This can be problematic for long sequences due to the quadratic dependence on the sequence length \(L\). This makes this self-attention layer computationally expensive and increasingly impractical for very long sequences.
+
+\subsection*{2}
+
+The third expansion for the McLaurin series for approximating the exponential function $e^z$ is expressed as follows:
+
+\begin{equation}
+e^z \approx 1 + z + \frac{z^2}{2}
+\label{q1:2-mclaurin}
+\end{equation}
+
+Applying this approximation to \(e^{q^Tk}\), where \(q, k \in \mathbb{R}^D\), yields:
+
+\[
+e^{q^Tk} \approx 1 + q^Tk + \frac{(q^Tk)^2}{2}
+\]
+
+Now, notice the that following is true, according to the multinomial theorem~\footnote{\url{https://en.wikipedia.org/wiki/Multinomial_theorem}}:
+
+\[
+(\sum_{i}{a_i})^2 = \sum_{i}{a_i^2} + 2 \sum_{i < j}{a_ia_j}
+\]
+
+Applying this theorem, we can expand \((q^T k)^2\) as follows:
+
+\[
+(q^Tk)^2 = \sum_{i=1}^{D}{(q_i k_i)}^2 + 2 \sum_{i < j}^{D}{q_i k_i q_j k_j}
+\]
+
+Which, when reorganized to make the feature map derivation more clear, looks as follows:
+
+\[
+(q^Tk)^2 = \sum_{i=1}^{D}{q_i^2 k_i^2} + 2 \sum_{i < j}^{D}{q_i q_j k_i k_j}
+\]
+
+Thus, we get the final approximation for \(e^{q^Tk}\):
+
+\[
+e^{q^Tk} \approx 1 + \sum_{i=1}^{D}{q_i k_i} + \frac{\sum_{i=1}^{D}{q_i^2 k_i^2}}{2} + \sum_{i < j}^{D}{q_i q_j k_i k_j}
+\]
+
+Finally, to capture this approximation through a feature map \(\phi: \mathbb{R}^D \rightarrow \mathbb{R}^M\), we define:
+
+\[
+\phi(q) = 
+\begin{bmatrix} 
+1 \\ 
+
+q_1 \\ 
+\vdots \\ 
+q_D \\
+
+\frac{1}{\sqrt{2}}q_1^2 \\
+\vdots \\
+\frac{1}{\sqrt{2}}q_D^2 \\
+
+q_1q_2 \\
+\vdots \\
+q_{D-1}q_D
+\end{bmatrix}
+\]
+
+Regarding the dimensionality, \(M\), we can invoke the multinomial theorem result for the number of coefficients, to calculate the number of coefficients of equation \ref{q1:2-mclaurin}.
+
+\[
+M = 1 + D + \binom{2 + D - 1}{D - 1} = 1 + D + \frac{(D+1)D}{2}
+\]
+
+Lastly, for the scenario where $K \geq 3$ terms are employed in the McLaurin series expansion, the dimensionality $M$ can be generalized. Similarly as above, we can also employ the multinomial theorem for values bigger than 2:
+
+\[
+M = 1 + D + \sum_{J=2}^{K}{\binom{J + D - 1}{D - 1}}
+\]
+
+\end{document}
