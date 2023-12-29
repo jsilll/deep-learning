@@ -68,7 +68,7 @@ class CNN(nn.Module):
             # An affine transformation with:
             # - 320 output features
             # - inp = out_channels * out_width * out_height
-            self.fc1_input_features = 16*6*6
+            self.fc1_input_features = 16 * 6 * 6
             self.fc1 = nn.Linear(self.fc1_input_features, 320)
             # A ReLU activation layer
             self.relu3 = nn.ReLU()
@@ -94,10 +94,15 @@ class CNN(nn.Module):
             self.conv1 = nn.Conv2d(1, 8, 3, stride=2, padding=1) # Correct
             self.relu1 = nn.ReLU()
             # 28x28 -> 3x3 stride 2 -> 14x14
-            # 28 - 3 + 2 * 1 / 2 + 1 = 14
+            # 28 - 3 + 2 * 1 / 2 + 1 = 14.5
+
             self.conv2 = nn.Conv2d(8, 16, 3, stride=2, padding=0)
             self.relu2 = nn.ReLU()
-            self.fc1_input_features = 16*6*6
+            # with N = 14: 14 - 3 / 2 + 1 = 6.5
+            # with N = 15: 15 - 3 / 2 + 1 = 7.5
+
+            self.fc1_input_features = 16 * 6 * 6
+            # assuming we always floor the dimension
             self.fc1 = nn.Linear(self.fc1_input_features, 320)
             # A ReLU activation layer
             self.relu3 = nn.ReLU()
@@ -120,8 +125,6 @@ class CNN(nn.Module):
             # LogSoftmax layer
             self.logsoftmax = nn.LogSoftmax(dim=1)
         
-        # Implementation for Q2.1 and Q2.2
-        
     def forward(self, x):
         # input should be of shape [b, channels, width, height] but we have [b, width * height * channels]
         # so we need to reshape it to [b, channels, width, height]
@@ -133,28 +136,15 @@ class CNN(nn.Module):
             x = self.drop(self.relu3(self.fc1(x)))
             x = self.relu4(self.fc2(x))
             x = self.logsoftmax(self.fc3(x))
-
             return x
-
-        
-        # conv and relu layers
-        
-
-        # max-pool layer if using it
-        if not self.no_maxpool:
-            raise NotImplementedError
-        
-        # prep for fully connected layer + relu
-        
-        # drop out
-        x = self.drop(x)
-
-        # second fully connected layer + relu
-        
-        # last fully connected layer
-        x = self.fc3(x)
-        
-        return F.log_softmax(x,dim=1)
+        else:
+            x = self.relu1(self.conv1(x))
+            x = self.relu2(self.conv2(x))
+            x = x.view(-1, self.fc1_input_features)
+            x = self.drop(self.relu3(self.fc1(x)))
+            x = self.relu4(self.fc2(x))
+            x = self.logsoftmax(self.fc3(x))
+            return x
 
 def train_batch(X, y, model, optimizer, criterion, device, **kwargs):
     """
