@@ -3,22 +3,23 @@
 \usepackage{url}
 \usepackage{color}
 \usepackage{float}
+\usepackage[format=hang,labelfont=bf,font=small]{caption}
 \usepackage{array}
 \usepackage{xcolor}
-\usepackage{multirow}
-\usepackage{graphicx}
 \usepackage{booktabs}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[margin=1in]{geometry}
 \usepackage{colortbl}
 \usepackage{hyperref}
 \usepackage{spreadtab}
 \usepackage{longtable}
 \usepackage{pdflscape}
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
-\usepackage[english]{babel}
-\usepackage[margin=1in]{geometry}
+\usepackage{subcaption}
 \usepackage{amsmath, amsthm, amssymb, amsfonts}
-\usepackage[format=hang,labelfont=bf,font=small]{caption}
+\usepackage{multirow}
+\usepackage{graphicx}
 
 \begin{document}
 
@@ -33,7 +34,7 @@ Each member of the group worked together on all the questions in this assignment
 
 \section*{Question 1}
 
-\subsection*{1}
+\subsection*{1.}
 
 The computational complexity of the self-attention layer in a transformer with a single attention head is \(O(L^2D)\), where \(L\) is the sequence length and \(D\) is the hidden size. In order to break down the complexity of this layer, it is important to note that the complexity of matrix multiplication of two matrices of dimensions \(n \times m\) and \(m \times p\) is \(O(nmp)\).
 
@@ -51,7 +52,7 @@ O(L^2D) + O(L^2) + O(L^2D) = O(L^2D)
 
 This can be problematic for long sequences due to the quadratic dependence on the sequence length \(L\). This makes this self-attention layer computationally expensive and increasingly impractical for very long sequences.
 
-\subsection*{2}
+\subsection*{2.}
 
 The third expansion for the McLaurin series for approximating the exponential function $e^z$ is expressed as follows:
 
@@ -122,5 +123,51 @@ Lastly, for the scenario where $K \geq 3$ terms are employed in the McLaurin ser
 \[
 M = 1 + D + \sum_{J=2}^{K}{\binom{J + D - 1}{D - 1}}
 \]
+
+\section*{Question 2}
+
+\subsection*{1.}
+
+The best configuration has a learning rate of $0.01$. It provided the best results in terms of final test accuracy: $0.8488$.
+
+\begin{figure}[H]
+    \hspace{0.025\linewidth}
+    \begin{subfigure}{0.45\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../data/q2/1/0.01.acc.png}
+        \caption{Validation accuracies for learning rate of 0.01 with max pooling}
+    \end{subfigure}
+    \hspace{0.05\linewidth}
+    \begin{subfigure}{0.45\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../data/q2/1/0.01.loss.png}
+        \caption{Losses as a function of the number of epochs for learning rate of 0.01 with max pooling}
+    \end{subfigure}
+\end{figure}
+
+\subsection*{2.}
+
+Using the optimal hyper-parameters found in the previous question, that is, with the learning rate of $0.01$, we trained the model for 15 epochs and obtained a final test accuracy of $0.8299$.
+
+\begin{figure}[H]
+    \hspace{0.025\linewidth}
+    \begin{subfigure}{0.45\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../data/q2/2/0.01.acc.png}
+        \caption{Validation accuracies for learning rate of 0.01 without max pooling}
+    \end{subfigure}
+    \hspace{0.05\linewidth}
+    \begin{subfigure}{0.45\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{../data/q2/2/0.01.loss.png}
+        \caption{Losses for learning rate of 0.01 without max pooling}
+    \end{subfigure}
+\end{figure}
+
+\subsection*{3.}
+
+The number of trainable parameters ($225618$) remains unchanged between both CNNs. Consequently, for the training stage, both CNNs have the same expressivity to adjust to data. The more significant difference comes from the application, or absence, of the max pooling layer. The max pooling layer provides many benefits that can justify the model's higher performance. Max pooling will select the highest value of each region and store it, discarding the remaining values. This will discard a lot of potentially less important information and noise, and only keep the highest values, which carry meaning in our network. Max pooling will, inevitably, reduce the spatial dimensions of the input data, however, by definition of the max function, it will always preserve the highest value across pools. This can provide the model translation, rotation, and scale invariance, an important property when classifying images.
+
+\section*{Question 3}
 
 \end{document}
